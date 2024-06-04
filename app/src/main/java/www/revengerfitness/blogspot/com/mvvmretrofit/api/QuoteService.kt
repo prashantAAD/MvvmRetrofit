@@ -6,6 +6,6 @@ import retrofit2.http.Query
 import www.revengerfitness.blogspot.com.mvvmretrofit.models.QuoteList
 
 interface QuoteService {
-@GET("/quotes")
+@GET("/quotes") // end point of url
     suspend fun getQuotes(@Query("page")page:Int):Response<QuoteList> // baseurl + "/quotes" + ?page=1
 }

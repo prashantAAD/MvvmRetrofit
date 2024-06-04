@@ -9,10 +9,10 @@ class QuoteRepository(private val quoteService:QuoteService) {
 private val quotesLiveData=MutableLiveData<QuoteList>()
     val quotes:LiveData<QuoteList>
         get() = quotesLiveData
-    suspend fun getQuotes(page:Int){
-        val result = quoteService.getQuotes(page)
-        if (result?.body()!=null){
-            quotesLiveData.postValue(result.body())
+    suspend fun getQuotes(page:Int){ // will called from viewmodel
+        val result = quoteService.getQuotes(page) // getQuotes function internally calls service
+        if (result.body() !=null){
+            quotesLiveData.postValue(result.body()) // setting observer to live data
 
         }
 

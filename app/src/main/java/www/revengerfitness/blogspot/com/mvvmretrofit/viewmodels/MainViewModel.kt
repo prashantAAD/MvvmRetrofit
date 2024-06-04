@@ -8,11 +8,11 @@ import kotlinx.coroutines.launch
 import www.revengerfitness.blogspot.com.mvvmretrofit.models.QuoteList
 import www.revengerfitness.blogspot.com.mvvmretrofit.repository.QuoteRepository
 
-class MainViewModel(val repository: QuoteRepository):ViewModel(){
+class MainViewModel(private val repository: QuoteRepository):ViewModel(){ // parameterized constructor of viewmodel so that use model factory
 
     init {
         viewModelScope.launch (Dispatchers.IO){
-            repository.getQuotes(1)
+            repository.getQuotes(1) // go to repository and get quotes
         }
 
     }
