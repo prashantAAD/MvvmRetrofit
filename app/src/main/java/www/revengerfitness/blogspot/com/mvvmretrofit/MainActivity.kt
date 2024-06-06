@@ -1,12 +1,12 @@
 package www.revengerfitness.blogspot.com.mvvmretrofit
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import www.revengerfitness.blogspot.com.mvvmretrofit.api.QuoteService
 import www.revengerfitness.blogspot.com.mvvmretrofit.api.RetrofitHelper
 import www.revengerfitness.blogspot.com.mvvmretrofit.databinding.ActivityMainBinding
@@ -18,10 +18,11 @@ import www.revengerfitness.blogspot.com.mvvmretrofit.viewmodels.MainViewModelFac
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel
-    private var adapter: QuoteAdapter? = null
-    private var layoutManager: RecyclerView.LayoutManager? = null
+   // private var adapter: QuoteAdapter? = null
+    //private var layoutManager: RecyclerView.LayoutManager? = null
 
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this,R.layout.activity_main)
@@ -33,16 +34,16 @@ class MainActivity : AppCompatActivity() {
         mainViewModel= ViewModelProvider(this,MainViewModelFactory(repository))[MainViewModel::class.java]
 
         binding.recyclerView.setHasFixedSize(true)
-        layoutManager= LinearLayoutManager(this)
-        binding.recyclerView.layoutManager=layoutManager
+        binding.recyclerView.layoutManager= LinearLayoutManager(this)
+        binding.recyclerView.layoutManager=binding.recyclerView.layoutManager
         mainViewModel.quotes.observe(this) { // here quotes is a live data which can be observe
             Log.d(
                 "prashant chauhan" +
                         "", it.results.toString()
             )
-            adapter = QuoteAdapter(this, it.results as MutableList<Result>)
-            adapter!!.notifyDataSetChanged()
-            binding.recyclerView.adapter = adapter
+            binding.recyclerView.adapter = QuoteAdapter(this, it.results as MutableList<Result>)
+            binding.recyclerView.adapter!!.notifyDataSetChanged()
+            binding.recyclerView.adapter = binding.recyclerView.adapter
 
 
         }
